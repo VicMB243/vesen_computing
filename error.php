@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2 class="mt-5 mb-3">Error</h2>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    
                         <div class="alert alert-danger">
                             
                             <p>An error has occured</br>
@@ -27,7 +27,7 @@
                                 <a href="dashboard.php" class="btn btn-secondary">OK</a>
                             </p>
                         </div>
-                    </form>
+                    
                 </div>
             </div>        
         </div>

@@ -1,16 +1,17 @@
 # vensen_computing test 
 
-#The database uses windows default username(root) and empty password ("")
+#The database is local and uses windows default username(root) and empty password ("")
 
 #The first page to be loaded is the index
-#Then you'll be taken to the login screen for users authentication
-#From there you can register as a new user or fill in the form
-#After verification you'll be taken to the dasboard where a list of existing accounts  is displayed
+#Then you'll be taken to the login screen for user authentication
+#From there you can register as a new user or fill in the form and login if already registered
+#After verification you'll be taken to the landing page (dashboard)where a list of existing admins is displayed
 #Depending on your admin rights You can add a new user and authomatically update the dashboard's table
-#or update/delete existing users depending on your rights as an addmin
-#By default each user has the default right to add a new one
-#But other rights such as edit/delete are assigned by competent admins having the right to do so
+#or update/delete existing admins depending on your rights
 
-#For purpose of testing Each user can edit his/her own account no matter the rights he has 
-#in order to give himself other rights (edit and delete) to be tested but in real life scenario this feature #should  be reviewed, only a competent admin should be able to edit a record no matter who's the owner of that account
+#For purpose of testing each new user has the default right to add a new admin 
+#meaning he can add his/her own account as an admin no matter the rights he has and give himself other #privileges (add, edit and delete other accounts)  this is just for testing reasons...
+#but in real life scenario this feature should  be reviewed, only a predefined admin should be able to perform that operation
+
+
 

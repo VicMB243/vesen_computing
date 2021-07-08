@@ -59,7 +59,7 @@ include "restricted.php";
                     //display existing users in a tabled ordered in descending approach 
                     //so that add/edit/delete operations can be performed depending on assigned admin privileges
 
-                    $sql = "SELECT * FROM users ORDER BY user_id DESC";
+                    $sql = "SELECT * FROM admins ORDER BY user_id DESC";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo '<table class="table table-bordered table-striped">';
@@ -81,7 +81,7 @@ include "restricted.php";
                                         echo "<td>" . $row['date'] . "</td>";
 
                                         echo "<td>";
-                                        //pass the selected user'id to the add/edit or delete page 
+                                        //pass the selected user'id to the add/edit or the delete page depending on the clicked link
                                         //that is where current admin's rights are checked before any operation on the selected user(record)
                                             echo '<a href="add_admin.php?id='. $row['user_id'] .'" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>';
                                             

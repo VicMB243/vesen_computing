@@ -3,7 +3,7 @@
 <html>
 
 <head>
-  <title>Edit user</title>
+  <title>Edit admin</title>
 
 
       <!-- Latest compiled and minified CSS -->
@@ -78,12 +78,12 @@
             //See if current admin's a genuine account and get the assigned rights/privileges
             // or deconnect him if account does not exist
 
-            $sql = "SELECT rights FROM users WHERE user_id='$uid' AND email='$uEmail'";
+            $sql = "SELECT rights FROM admins WHERE email='$uEmail'";
             $result = mysqli_query($link,$sql);
             
             if (mysqli_num_rows($result)==0)
             {
-                header("location: logoff.php");
+                header("location: not_allowed_dialog.php");
                 exit;
             }
             while($row = mysqli_fetch_array($result)){
@@ -114,36 +114,38 @@
             //then edit them if necessary or it will be a new account to be created
             
             // Prepare a select statement
-            $sql = "SELECT * FROM users WHERE user_id = ?";
+            $sql = "SELECT * FROM admins WHERE user_id = ?";
             if($stmt = mysqli_prepare($link, $sql)){
 
                 // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "i", $param_id);
-            
-            // Set parameters
-            $param_id = $id;
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                $result = mysqli_stmt_get_result($stmt);
-    
-                if(mysqli_num_rows($result) == 1){
-                   
-                    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                    
-                    // Retrieve individual field values and assign them to variables
-                    $id = $row["user_id"];
-                    $name = $row["username"];
-                    $email = $row["email"];
-                    $adminRights = $row["rights"];
-
-
-                   
-                } 
+                mysqli_stmt_bind_param($stmt, "i", $param_id);
                 
+                // Set parameters
+                $param_id = $id;
+                
+                // Attempt to execute the prepared statement
+                if(mysqli_stmt_execute($stmt)){
+                    $result = mysqli_stmt_get_result($stmt);
+        
+                    if(mysqli_num_rows($result) == 1){
+                    
+                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                        
+                        // Retrieve individual field values and assign them to variables
+                        $id = $row["user_id"];
+                        $name = $row["username"];
+                        $email = $row["email"];
+                        $adminRights = $row["rights"];
+
+
+                    
+                    } 
+                    
             } else{
                 header("location: error.php");
             }
+        }else{
+            header("location: error.php");
         }
         
             // Close statement
@@ -151,11 +153,7 @@
             
             // Close connection
             mysqli_close($link);
-     } else{
-           // URL doesn't contain valid id. create new admin account
-           //$createNewAccount = "true";
-           // exit();
-    }
+     } 
 
     
     //to be executed on "save" operation (when the save btn is pressed)
@@ -177,25 +175,24 @@
             
             
         //verify if account exists or not and perform either update operation or create new account accordingly
-        $sql = "SELECT user_id FROM users WHERE user_id='$id' AND email='$email'";
+        $sql = "SELECT user_id FROM admins WHERE user_id='$id' AND email='$email'";
         $result = mysqli_query($link,$sql);
 
         if (mysqli_num_rows($result)==0)
         {
            
             // Prepare an insert statement
-        $sql = "INSERT INTO users (username, email, rights, password, date) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO admins (username, email, rights, date) VALUES (?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_name, $param_email, $param_rights, $param_password, $param_date);
+            mysqli_stmt_bind_param($stmt, "ssss", $param_name, $param_email, $param_rights, $param_date);
             
             // Set parameters
             $param_name = $name;
             $param_email = $email;
             $param_rights = implode('|',$adminRights);
             $param_date = $date;
-            $param_password = "";
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -225,7 +222,7 @@
            
             
                     // Prepare an update statement
-                $sql = "UPDATE users SET username=?, email=?, rights=?, date=? WHERE user_id=?";
+                $sql = "UPDATE admins SET username=?, email=?, rights=?, date=? WHERE user_id=?";
                 
                 if($stmt = mysqli_prepare($link, $sql)){
                     // Bind variables to the prepared statement as parameters

@@ -41,9 +41,7 @@
     $email = filter_input(INPUT_POST, 'email');
     $pass = filter_input(INPUT_POST, 'pass1');
 
-    //the registered user has the default right to "Add",
-    //other rights such as right to edit or delete are given by competent admins having the privilege to assign them to others
-    $adminRights = implode('|',["Add"]);
+    
     $date = date("Y-m-d H:i:s");
 
 
@@ -55,8 +53,8 @@
     {
         
 
-         $sql = "INSERT INTO users (username, email, rights, password, date)
-                  VALUES ('$name','$email','$adminRights', PASSWORD('$pass'), '$date')";
+         $sql = "INSERT INTO users (username, email, password, date)
+                  VALUES ('$name','$email', PASSWORD('$pass'), '$date')";
          mysqli_query($link,$sql);
 
          if (mysqli_error($link))  echo "MySQL Error: " . mysqli_error($link);

@@ -9,12 +9,12 @@ $email = $_COOKIE['auth_email'];
 //get current admin's rights from db and perform delete operation if he/she is allowed to do so
 //otherwise show the "Not Allowed" dialog and go back to dashboard screen
 
-$sql = "SELECT rights FROM users WHERE user_id='$uid' AND email='$email'";
+$sql = "SELECT rights FROM admins WHERE email='$email'";
 $result = mysqli_query($link,$sql);
 
 if (mysqli_num_rows($result)==0)
 {
-    header("location: logoff.php");
+    header("location: not_allowed_dialog.php");
     exit;
 }
 while($row = mysqli_fetch_array($result)){
@@ -35,7 +35,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
    
     
     // Prepare a delete statement
-    $sql = "DELETE FROM users WHERE user_id = ?";
+    $sql = "DELETE FROM admins WHERE user_id = ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
